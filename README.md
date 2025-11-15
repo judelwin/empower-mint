@@ -116,11 +116,4 @@ empowermint/
 - [DEMO_SCRIPT.md](./DEMO_SCRIPT.md) - Step-by-step demo guide
 - [PITCH_SCRIPT.md](./PITCH_SCRIPT.md) - Pitch presentation script
 
-## License
-
-[To be determined]
-
-## Contributing
-
-[To be determined]
 

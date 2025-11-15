@@ -1,17 +1,34 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import AppLayout from './components/layout/AppLayout';
+import Landing from './routes/Landing';
+import Onboarding from './routes/Onboarding';
+import Dashboard from './routes/Dashboard';
+import Lessons from './routes/Lessons';
+import LessonDetail from './routes/LessonDetail';
+import Scenarios from './routes/Scenarios';
+import ScenarioPlayer from './routes/ScenarioPlayer';
+import Simulator from './routes/Simulator';
+import Settings from './routes/Settings';
+
 function App() {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <main className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">
-          EmpowerMint
-        </h1>
-        <p className="text-lg text-gray-600">
-          Welcome! The app is being set up...
-        </p>
-      </main>
-    </div>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route element={<AppLayout />}>
+          <Route path="/onboarding" element={<Onboarding />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/lessons" element={<Lessons />} />
+          <Route path="/lessons/:id" element={<LessonDetail />} />
+          <Route path="/scenarios" element={<Scenarios />} />
+          <Route path="/scenarios/:id" element={<ScenarioPlayer />} />
+          <Route path="/simulator" element={<Simulator />} />
+          <Route path="/settings" element={<Settings />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
 
