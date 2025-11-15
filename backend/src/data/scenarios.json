@@ -1,0 +1,474 @@
+[
+  {
+    "id": "scenario-1-first-job",
+    "title": "Your First Real Job: Managing New Income",
+    "description": "You just landed your first full-time job with a salary of $3,500 per month after taxes. You're excited but also nervous about managing this new income. You have some student loan debt and want to start building your financial future.",
+    "category": "first-job",
+    "difficultyLevel": 1,
+    "initialState": {
+      "savings": 500,
+      "debt": 25000,
+      "monthlyIncome": 3500,
+      "monthlyExpenses": 2000,
+      "stressLevel": 5,
+      "financialKnowledge": 4
+    },
+    "decisionPoints": [
+      {
+        "id": "dp1",
+        "prompt": "You receive your first paycheck. Your monthly expenses (rent, food, utilities) are about $2,000, leaving you with $1,500 extra each month. What's your priority?",
+        "choices": [
+          {
+            "id": "choice1a",
+            "text": "Save everything in a savings account for now",
+            "shortTermImpact": {
+              "savingsChange": 1500,
+              "debtChange": 0,
+              "expenseChange": 0,
+              "stressChange": -1,
+              "knowledgeChange": 1
+            },
+            "longTermImpact": {
+              "savingsChange": 0,
+              "debtChange": 500,
+              "expenseChange": 0,
+              "stressChange": 1,
+              "knowledgeChange": 0
+            }
+          },
+          {
+            "id": "choice1b",
+            "text": "Split: $500 to emergency fund, $1000 to student loans",
+            "shortTermImpact": {
+              "savingsChange": 500,
+              "debtChange": -1000,
+              "expenseChange": 0,
+              "stressChange": -2,
+              "knowledgeChange": 2
+            },
+            "longTermImpact": {
+              "savingsChange": 200,
+              "debtChange": -500,
+              "expenseChange": 0,
+              "stressChange": -1,
+              "knowledgeChange": 1
+            }
+          },
+          {
+            "id": "choice1c",
+            "text": "Pay off all extra debt immediately",
+            "shortTermImpact": {
+              "savingsChange": 0,
+              "debtChange": -1500,
+              "expenseChange": 0,
+              "stressChange": -1,
+              "knowledgeChange": 1
+            },
+            "longTermImpact": {
+              "savingsChange": -300,
+              "debtChange": 0,
+              "expenseChange": 0,
+              "stressChange": 2,
+              "knowledgeChange": 0
+            }
+          }
+        ]
+      },
+      {
+        "id": "dp2",
+        "prompt": "After 3 months, you've been consistent with your approach. Your car breaks down and needs $800 in repairs. How do you handle it?",
+        "choices": [
+          {
+            "id": "choice2a",
+            "text": "Use your emergency fund if you have one, otherwise put it on credit card",
+            "shortTermImpact": {
+              "savingsChange": -800,
+              "debtChange": 0,
+              "expenseChange": 0,
+              "stressChange": -1,
+              "knowledgeChange": 1
+            },
+            "longTermImpact": {
+              "savingsChange": 100,
+              "debtChange": 0,
+              "expenseChange": 0,
+              "stressChange": -1,
+              "knowledgeChange": 1
+            }
+          },
+          {
+            "id": "choice2b",
+            "text": "Put it on a credit card and pay it off over 6 months",
+            "shortTermImpact": {
+              "savingsChange": 0,
+              "debtChange": 800,
+              "expenseChange": 133,
+              "stressChange": 2,
+              "knowledgeChange": 0
+            },
+            "longTermImpact": {
+              "savingsChange": -200,
+              "debtChange": 200,
+              "expenseChange": 0,
+              "stressChange": 1,
+              "knowledgeChange": -1
+            }
+          },
+          {
+            "id": "choice2c",
+            "text": "Delay other expenses and save up for it",
+            "shortTermImpact": {
+              "savingsChange": 0,
+              "debtChange": 0,
+              "expenseChange": 0,
+              "stressChange": 3,
+              "knowledgeChange": 0
+            },
+            "longTermImpact": {
+              "savingsChange": 0,
+              "debtChange": 0,
+              "expenseChange": 0,
+              "stressChange": -1,
+              "knowledgeChange": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": "dp3",
+        "prompt": "After a year, you've built some savings and paid down debt. A friend suggests you should start investing. You have $2,000 you could invest. What do you do?",
+        "choices": [
+          {
+            "id": "choice3a",
+            "text": "Invest it all in a single stock your friend recommends",
+            "shortTermImpact": {
+              "savingsChange": -2000,
+              "debtChange": 0,
+              "expenseChange": 0,
+              "stressChange": 2,
+              "knowledgeChange": 0
+            },
+            "longTermImpact": {
+              "savingsChange": -500,
+              "debtChange": 0,
+              "expenseChange": 0,
+              "stressChange": 3,
+              "knowledgeChange": -1
+            }
+          },
+          {
+            "id": "choice3b",
+            "text": "Research and invest in a low-cost diversified index fund",
+            "shortTermImpact": {
+              "savingsChange": -2000,
+              "debtChange": 0,
+              "expenseChange": 0,
+              "stressChange": 0,
+              "knowledgeChange": 3
+            },
+            "longTermImpact": {
+              "savingsChange": 1500,
+              "debtChange": 0,
+              "expenseChange": 0,
+              "stressChange": -2,
+              "knowledgeChange": 2
+            }
+          },
+          {
+            "id": "choice3c",
+            "text": "Keep it in savings - investing is too risky",
+            "shortTermImpact": {
+              "savingsChange": 0,
+              "debtChange": 0,
+              "expenseChange": 0,
+              "stressChange": -1,
+              "knowledgeChange": 0
+            },
+            "longTermImpact": {
+              "savingsChange": -1000,
+              "debtChange": 0,
+              "expenseChange": 0,
+              "stressChange": 0,
+              "knowledgeChange": -1
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "scenario-2-apartment-rent",
+    "title": "Finding Your First Apartment: Budget vs. Lifestyle",
+    "description": "You've been saving for months and are ready to move out. You've found two apartments that interest you. One is more expensive but in a better location with amenities. The other is cheaper but requires a longer commute and fewer amenities.",
+    "category": "rent",
+    "difficultyLevel": 1,
+    "initialState": {
+      "savings": 3000,
+      "debt": 15000,
+      "monthlyIncome": 4000,
+      "monthlyExpenses": 1500,
+      "stressLevel": 4,
+      "financialKnowledge": 5
+    },
+    "decisionPoints": [
+      {
+        "id": "dp1",
+        "prompt": "Apartment A costs $1,800/month (50% more than your budget of $1,200) but is in a great walkable neighborhood, close to work, and has a gym. Apartment B costs $1,200/month, is farther from work (longer commute), and has fewer amenities. Which do you choose?",
+        "choices": [
+          {
+            "id": "choice1a",
+            "text": "Choose Apartment A - quality of life matters",
+            "shortTermImpact": {
+              "savingsChange": -1800,
+              "debtChange": 0,
+              "expenseChange": 600,
+              "stressChange": -2,
+              "knowledgeChange": 0
+            },
+            "longTermImpact": {
+              "savingsChange": -3600,
+              "debtChange": 1200,
+              "expenseChange": 0,
+              "stressChange": 1,
+              "knowledgeChange": 0
+            }
+          },
+          {
+            "id": "choice1b",
+            "text": "Choose Apartment B - stick to your budget",
+            "shortTermImpact": {
+              "savingsChange": -1200,
+              "debtChange": 0,
+              "expenseChange": 0,
+              "stressChange": 1,
+              "knowledgeChange": 1
+            },
+            "longTermImpact": {
+              "savingsChange": 2400,
+              "debtChange": -1800,
+              "expenseChange": 0,
+              "stressChange": -1,
+              "knowledgeChange": 1
+            }
+          },
+          {
+            "id": "choice1c",
+            "text": "Look for a middle-ground option around $1,500/month",
+            "shortTermImpact": {
+              "savingsChange": -1500,
+              "debtChange": 0,
+              "expenseChange": 300,
+              "stressChange": 0,
+              "knowledgeChange": 2
+            },
+            "longTermImpact": {
+              "savingsChange": 600,
+              "debtChange": -900,
+              "expenseChange": 0,
+              "stressChange": 0,
+              "knowledgeChange": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": "dp2",
+        "prompt": "After moving in, you realize you need some furniture and household items. You could spend $2,000 on new furniture, $500 on second-hand items, or gradually buy things as you save. What do you do?",
+        "choices": [
+          {
+            "id": "choice2a",
+            "text": "Buy new furniture on credit - you want it to look nice",
+            "shortTermImpact": {
+              "savingsChange": 0,
+              "debtChange": 2000,
+              "expenseChange": 100,
+              "stressChange": 1,
+              "knowledgeChange": -1
+            },
+            "longTermImpact": {
+              "savingsChange": -800,
+              "debtChange": 600,
+              "expenseChange": 0,
+              "stressChange": 2,
+              "knowledgeChange": 0
+            }
+          },
+          {
+            "id": "choice2b",
+            "text": "Buy second-hand and save for nicer items later",
+            "shortTermImpact": {
+              "savingsChange": -500,
+              "debtChange": 0,
+              "expenseChange": 0,
+              "stressChange": 0,
+              "knowledgeChange": 2
+            },
+            "longTermImpact": {
+              "savingsChange": 1000,
+              "debtChange": -500,
+              "expenseChange": 0,
+              "stressChange": -1,
+              "knowledgeChange": 1
+            }
+          },
+          {
+            "id": "choice2c",
+            "text": "Buy essentials only and gradually furnish over time",
+            "shortTermImpact": {
+              "savingsChange": -200,
+              "debtChange": 0,
+              "expenseChange": 0,
+              "stressChange": 1,
+              "knowledgeChange": 1
+            },
+            "longTermImpact": {
+              "savingsChange": 1500,
+              "debtChange": -1000,
+              "expenseChange": 0,
+              "stressChange": -2,
+              "knowledgeChange": 2
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "scenario-3-market-dip",
+    "title": "Market Dip: Stay the Course or Panic?",
+    "description": "You've been investing for a year now and have $10,000 in the stock market. Suddenly, the market drops 20% - your portfolio is now worth $8,000. You're feeling anxious and wondering if you should sell to prevent further losses.",
+    "category": "market-crash",
+    "difficultyLevel": 2,
+    "initialState": {
+      "savings": 5000,
+      "debt": 8000,
+      "monthlyIncome": 4500,
+      "monthlyExpenses": 2800,
+      "stressLevel": 7,
+      "financialKnowledge": 6
+    },
+    "decisionPoints": [
+      {
+        "id": "dp1",
+        "prompt": "The market has dropped 20%. Your $10,000 investment is now worth $8,000. Your emotions are telling you to sell to stop the bleeding. What do you do?",
+        "choices": [
+          {
+            "id": "choice1a",
+            "text": "Sell everything and put it back in savings",
+            "shortTermImpact": {
+              "savingsChange": 8000,
+              "debtChange": 0,
+              "expenseChange": 0,
+              "stressChange": -2,
+              "knowledgeChange": -2
+            },
+            "longTermImpact": {
+              "savingsChange": -3000,
+              "debtChange": 0,
+              "expenseChange": 0,
+              "stressChange": 2,
+              "knowledgeChange": -1
+            }
+          },
+          {
+            "id": "choice1b",
+            "text": "Hold steady - this is normal market volatility",
+            "shortTermImpact": {
+              "savingsChange": 0,
+              "debtChange": 0,
+              "expenseChange": 0,
+              "stressChange": 0,
+              "knowledgeChange": 2
+            },
+            "longTermImpact": {
+              "savingsChange": 3000,
+              "debtChange": 0,
+              "expenseChange": 0,
+              "stressChange": -2,
+              "knowledgeChange": 3
+            }
+          },
+          {
+            "id": "choice1c",
+            "text": "Buy more - stocks are on sale!",
+            "shortTermImpact": {
+              "savingsChange": -2000,
+              "debtChange": 0,
+              "expenseChange": 0,
+              "stressChange": 1,
+              "knowledgeChange": 2
+            },
+            "longTermImpact": {
+              "savingsChange": 5000,
+              "debtChange": 0,
+              "expenseChange": 0,
+              "stressChange": -3,
+              "knowledgeChange": 3
+            }
+          }
+        ]
+      },
+      {
+        "id": "dp2",
+        "prompt": "Six months later, the market has recovered and your portfolio is now worth $12,000 (more than your original $10,000). A colleague tells you about a 'hot stock tip' and suggests you should put all your money in it. What's your response?",
+        "choices": [
+          {
+            "id": "choice2a",
+            "text": "Follow the tip - put everything in that one stock",
+            "shortTermImpact": {
+              "savingsChange": 0,
+              "debtChange": 0,
+              "expenseChange": 0,
+              "stressChange": 1,
+              "knowledgeChange": -1
+            },
+            "longTermImpact": {
+              "savingsChange": -4000,
+              "debtChange": 0,
+              "expenseChange": 0,
+              "stressChange": 3,
+              "knowledgeChange": -2
+            }
+          },
+          {
+            "id": "choice2b",
+            "text": "Stay diversified - keep your balanced portfolio",
+            "shortTermImpact": {
+              "savingsChange": 0,
+              "debtChange": 0,
+              "expenseChange": 0,
+              "stressChange": -1,
+              "knowledgeChange": 2
+            },
+            "longTermImpact": {
+              "savingsChange": 2000,
+              "debtChange": 0,
+              "expenseChange": 0,
+              "stressChange": -2,
+              "knowledgeChange": 2
+            }
+          },
+          {
+            "id": "choice2c",
+            "text": "Take profits - sell everything and secure the gains",
+            "shortTermImpact": {
+              "savingsChange": 12000,
+              "debtChange": 0,
+              "expenseChange": 0,
+              "stressChange": -2,
+              "knowledgeChange": 0
+            },
+            "longTermImpact": {
+              "savingsChange": -2000,
+              "debtChange": 0,
+              "expenseChange": 0,
+              "stressChange": 1,
+              "knowledgeChange": -1
+            }
+          }
+        ]
+      }
+    ]
+  }
+]
+

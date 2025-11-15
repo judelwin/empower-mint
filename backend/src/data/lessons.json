@@ -1,0 +1,328 @@
+[
+  {
+    "id": "lesson-1-compound-interest",
+    "title": "Understanding Compound Interest",
+    "category": "investing",
+    "difficultyLevel": 1,
+    "estimatedMinutes": 10,
+    "content": {
+      "sections": [
+        {
+          "type": "text",
+          "content": "Compound interest is often called the 'eighth wonder of the world' - and for good reason! It's the interest you earn on both your original money and the interest you've already earned."
+        },
+        {
+          "type": "text",
+          "content": "Here's a simple example: If you invest $100 with a 10% annual return, after year 1 you'll have $110. But in year 2, you earn 10% on $110 (not just $100), so you'll have $121. In year 3, you earn 10% on $121, giving you $133.10."
+        },
+        {
+          "type": "text",
+          "content": "The key takeaway: Time is your best friend when it comes to compound interest. Starting early, even with small amounts, can lead to significant growth over decades. The longer your money compounds, the more powerful the effect becomes."
+        },
+        {
+          "type": "text",
+          "content": "This is why financial advisors often recommend starting to save and invest as early as possible - even small amounts invested consistently over time can grow substantially thanks to compound interest."
+        }
+      ]
+    },
+    "quizQuestions": [
+      {
+        "id": "q1",
+        "question": "What is compound interest?",
+        "options": [
+          "Interest earned only on your original investment",
+          "Interest earned on your original investment plus previously earned interest",
+          "Interest that compounds twice per year",
+          "A type of bank account"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Compound interest means you earn interest not just on your original investment, but also on any interest you've already earned. This creates exponential growth over time."
+      },
+      {
+        "id": "q2",
+        "question": "If you invest $100 at 10% annual compound interest, how much will you have after 2 years?",
+        "options": [
+          "$110",
+          "$120",
+          "$121",
+          "$130"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Year 1: $100 × 1.10 = $110. Year 2: $110 × 1.10 = $121. You earn interest on the interest from year 1!"
+      },
+      {
+        "id": "q3",
+        "question": "Why is starting to invest early important?",
+        "options": [
+          "Interest rates are always higher for younger investors",
+          "Time allows compound interest to work its magic",
+          "Younger people are better at investing",
+          "It doesn't matter when you start"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The longer your money has to compound, the more powerful the growth becomes. Starting early means your money has more time to grow exponentially."
+      }
+    ]
+  },
+  {
+    "id": "lesson-2-budgeting-basics",
+    "title": "Budgeting Basics: Take Control of Your Money",
+    "category": "budgeting",
+    "difficultyLevel": 1,
+    "estimatedMinutes": 12,
+    "content": {
+      "sections": [
+        {
+          "type": "text",
+          "content": "A budget is simply a plan for your money - it tells your money where to go instead of wondering where it went. Creating and sticking to a budget is one of the most important financial skills you can develop."
+        },
+        {
+          "type": "text",
+          "content": "The 50/30/20 rule is a popular budgeting framework:\n- 50% of your income goes to needs (housing, food, utilities, minimum debt payments)\n- 30% goes to wants (entertainment, dining out, hobbies)\n- 20% goes to savings and debt repayment beyond minimums"
+        },
+        {
+          "type": "text",
+          "content": "However, this is just a guideline. If you're living in a high-cost area, your needs might be more than 50%. If you're working to pay off debt aggressively, you might allocate more than 20% to debt repayment. The key is to find a balance that works for your situation."
+        },
+        {
+          "type": "text",
+          "content": "Tracking your expenses for at least one month is crucial. Write down everything you spend money on - from your rent to that $3 coffee. You might be surprised where your money actually goes! Once you know your spending patterns, you can make informed decisions about what to adjust."
+        }
+      ]
+    },
+    "quizQuestions": [
+      {
+        "id": "q1",
+        "question": "What is the purpose of a budget?",
+        "options": [
+          "To restrict your spending completely",
+          "To plan where your money goes",
+          "To save money without effort",
+          "To track only your income"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A budget is a plan that helps you decide where your money should go. It's not about restriction - it's about making conscious choices with your money."
+      },
+      {
+        "id": "q2",
+        "question": "According to the 50/30/20 rule, what percentage should go to savings and debt repayment?",
+        "options": [
+          "10%",
+          "20%",
+          "30%",
+          "50%"
+        ],
+        "correctAnswer": 1,
+        "explanation": "The 50/30/20 rule suggests 20% of your income should go to savings and debt repayment beyond minimum payments. Remember, this is a guideline that may need adjustment for your situation."
+      },
+      {
+        "id": "q3",
+        "question": "Why is tracking expenses important?",
+        "options": [
+          "It's required by law",
+          "To understand where your money actually goes",
+          "To impress your friends",
+          "It's not important"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Tracking expenses helps you understand your spending patterns. Many people are surprised to learn where their money actually goes when they start tracking!"
+      }
+    ]
+  },
+  {
+    "id": "lesson-3-debt-management",
+    "title": "Managing Debt: Strategies for Financial Freedom",
+    "category": "debt",
+    "difficultyLevel": 2,
+    "estimatedMinutes": 15,
+    "content": {
+      "sections": [
+        {
+          "type": "text",
+          "content": "Not all debt is created equal. Good debt (like a reasonable student loan or mortgage) can help you build wealth over time. Bad debt (like high-interest credit card debt) can trap you in a cycle of payments."
+        },
+        {
+          "type": "text",
+          "content": "If you have multiple debts, two common strategies are:\n\n1. Debt Snowball: Pay off the smallest debt first, then roll that payment into the next smallest. This provides quick wins and motivation.\n\n2. Debt Avalanche: Pay off the debt with the highest interest rate first, then move to the next highest. This saves you more money in interest over time."
+        },
+        {
+          "type": "text",
+          "content": "Always make at least the minimum payment on all debts to avoid penalties and credit score damage. Then, put any extra money toward your chosen debt payoff strategy."
+        },
+        {
+          "type": "text",
+          "content": "Remember: Paying off debt is like giving yourself a guaranteed return equal to the interest rate. Paying off a credit card with 20% interest is like earning a 20% return - which is hard to beat with most investments!"
+        }
+      ]
+    },
+    "quizQuestions": [
+      {
+        "id": "q1",
+        "question": "What is the main difference between debt snowball and debt avalanche methods?",
+        "options": [
+          "One is faster than the other",
+          "Snowball focuses on smallest debt, avalanche on highest interest",
+          "One is only for credit cards, the other for loans",
+          "There's no difference"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Debt snowball pays off the smallest debt first for psychological wins, while debt avalanche pays off the highest interest rate debt first to save more money overall."
+      },
+      {
+        "id": "q2",
+        "question": "When paying off debt, you should:",
+        "options": [
+          "Only pay the minimum on all debts",
+          "Skip payments on some debts to focus on others",
+          "Make minimum payments on all, then extra on one",
+          "Only pay debts you can afford"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Always make at least minimum payments on all debts to avoid penalties. Then put any extra money toward your chosen payoff strategy."
+      },
+      {
+        "id": "q3",
+        "question": "Paying off a credit card with 20% interest is like earning what return?",
+        "options": [
+          "5% return",
+          "10% return",
+          "20% return",
+          "It doesn't save you money"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Paying off debt gives you a guaranteed return equal to the interest rate you're avoiding. Paying off 20% interest debt = earning a 20% return!"
+      }
+    ]
+  },
+  {
+    "id": "lesson-4-emergency-fund",
+    "title": "Building an Emergency Fund: Your Financial Safety Net",
+    "category": "saving",
+    "difficultyLevel": 1,
+    "estimatedMinutes": 10,
+    "content": {
+      "sections": [
+        {
+          "type": "text",
+          "content": "An emergency fund is money set aside to cover unexpected expenses or financial emergencies, like medical bills, car repairs, or job loss. Think of it as your financial safety net."
+        },
+        {
+          "type": "text",
+          "content": "Most financial experts recommend having 3-6 months of expenses saved in an emergency fund. If your monthly expenses are $2,000, aim for $6,000-$12,000 in your emergency fund."
+        },
+        {
+          "type": "text",
+          "content": "Start small if you need to - even $500 or $1,000 can help with smaller emergencies. The key is to start building the habit of saving. Automate transfers to your emergency fund so it happens without thinking about it."
+        },
+        {
+          "type": "text",
+          "content": "Keep your emergency fund in a high-yield savings account that's easily accessible (but not so easy that you're tempted to use it for non-emergencies). It should be separate from your regular checking account."
+        }
+      ]
+    },
+    "quizQuestions": [
+      {
+        "id": "q1",
+        "question": "What is the recommended size of an emergency fund?",
+        "options": [
+          "1-2 months of expenses",
+          "3-6 months of expenses",
+          "6-12 months of expenses",
+          "1 year of income"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Most experts recommend 3-6 months of expenses. This provides enough cushion for most emergencies while being an achievable goal."
+      },
+      {
+        "id": "q2",
+        "question": "Where should you keep your emergency fund?",
+        "options": [
+          "In a checking account you use daily",
+          "In a high-yield savings account that's easily accessible",
+          "Invested in stocks for growth",
+          "In cash at home"
+        ],
+        "correctAnswer": 1,
+        "explanation": "A high-yield savings account balances accessibility (you need it quickly in emergencies) with earning some interest, while keeping it separate from daily spending money."
+      },
+      {
+        "id": "q3",
+        "question": "Why is automating transfers to your emergency fund helpful?",
+        "options": [
+          "It prevents you from saving",
+          "It builds the habit without requiring willpower",
+          "It's required by banks",
+          "It earns more interest"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Automating savings removes the need to remember or make a decision each month - it happens automatically, making it easier to build the habit consistently."
+      }
+    ]
+  },
+  {
+    "id": "lesson-5-investing-basics",
+    "title": "Investing Basics: Growing Your Wealth Over Time",
+    "category": "investing",
+    "difficultyLevel": 2,
+    "estimatedMinutes": 15,
+    "content": {
+      "sections": [
+        {
+          "type": "text",
+          "content": "Investing is putting your money to work to generate returns over time. Unlike saving (which preserves your money), investing aims to grow your wealth through assets like stocks, bonds, and mutual funds."
+        },
+        {
+          "type": "text",
+          "content": "Key principles of investing:\n\n1. Start early: Time in the market beats timing the market. The sooner you start, the more time your investments have to grow.\n\n2. Diversify: Don't put all your eggs in one basket. Spread investments across different assets, industries, and regions.\n\n3. Think long-term: Short-term market fluctuations are normal. Focus on long-term growth rather than day-to-day changes.\n\n4. Keep costs low: High fees eat into returns. Look for low-cost index funds or ETFs."
+        },
+        {
+          "type": "text",
+          "content": "A common approach for beginners is to invest in low-cost, diversified index funds or ETFs (Exchange-Traded Funds) that track the overall stock market. These provide instant diversification and have lower fees than actively managed funds."
+        },
+        {
+          "type": "text",
+          "content": "Remember: Investing involves risk - you could lose money. Only invest money you don't need in the short term and can afford to potentially lose. The stock market has historically gone up over long periods, but past performance doesn't guarantee future results."
+        }
+      ]
+    },
+    "quizQuestions": [
+      {
+        "id": "q1",
+        "question": "What is the main difference between saving and investing?",
+        "options": [
+          "There's no difference",
+          "Saving preserves money, investing aims to grow it",
+          "Saving is for short-term, investing for long-term only",
+          "Saving earns more returns than investing"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Saving preserves your money (like in a savings account), while investing aims to grow your wealth over time through assets like stocks and bonds - but with more risk."
+      },
+      {
+        "id": "q2",
+        "question": "Why is diversification important?",
+        "options": [
+          "It guarantees returns",
+          "It spreads risk across different investments",
+          "It's required by law",
+          "It prevents all losses"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Diversification spreads your investments across different assets, industries, and regions, reducing the impact if one investment performs poorly."
+      },
+      {
+        "id": "q3",
+        "question": "What is a good approach for beginner investors?",
+        "options": [
+          "Invest all money in a single stock",
+          "Buy high-cost actively managed funds",
+          "Invest in low-cost, diversified index funds",
+          "Avoid investing entirely"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Low-cost, diversified index funds or ETFs provide instant diversification, lower fees, and track the overall market - making them ideal for beginners."
+      }
+    ]
+  }
+]
+
