@@ -60,6 +60,43 @@ export const simulateWealth = async (req: Request, res: Response) => {
       });
     }
 
+    // Validate number types and ranges
+    if (typeof initialAmount !== 'number' || initialAmount < 0) {
+      return res.status(400).json({
+        error: {
+          code: 'VALIDATION_ERROR',
+          message: 'initialAmount must be a non-negative number',
+        },
+      });
+    }
+
+    if (typeof monthlyContribution !== 'number' || monthlyContribution < 0) {
+      return res.status(400).json({
+        error: {
+          code: 'VALIDATION_ERROR',
+          message: 'monthlyContribution must be a non-negative number',
+        },
+      });
+    }
+
+    if (typeof annualReturn !== 'number' || annualReturn < 0 || annualReturn > 100) {
+      return res.status(400).json({
+        error: {
+          code: 'VALIDATION_ERROR',
+          message: 'annualReturn must be a number between 0 and 100',
+        },
+      });
+    }
+
+    if (typeof years !== 'number' || years < 1 || years > 100) {
+      return res.status(400).json({
+        error: {
+          code: 'VALIDATION_ERROR',
+          message: 'years must be a number between 1 and 100',
+        },
+      });
+    }
+
     // Calculate wealth over time
     const dataPoints: Array<{ year: number; value: number }> = [];
     let currentValue = initialAmount;

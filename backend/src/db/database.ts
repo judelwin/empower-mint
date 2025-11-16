@@ -2,6 +2,7 @@ import sqlite3 from 'sqlite3';
 import { promisify } from 'util';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { mkdirSync, existsSync } from 'fs';
 import { UserProfile } from '../types/user.js';
 import { Progress } from '../types/progress.js';
 
@@ -14,19 +15,34 @@ let db: sqlite3.Database | null = null;
 
 export function getDatabase(): sqlite3.Database {
   if (!db) {
-    db = new sqlite3.Database(DB_PATH, (err) => {
-      if (err) {
-        console.error('Error opening database:', err);
-        throw err;
+    try {
+      // Ensure data directory exists
+      const dbDir = path.dirname(DB_PATH);
+      if (!existsSync(dbDir)) {
+        mkdirSync(dbDir, { recursive: true });
       }
-      console.log('Connected to SQLite database');
-    });
 
-    // Enable foreign keys
-    db.run('PRAGMA foreign_keys = ON');
+      db = new sqlite3.Database(DB_PATH, (err) => {
+        if (err) {
+          console.error('Error opening database:', err);
+          throw err;
+        }
+        console.log('Connected to SQLite database');
+      });
 
-    // Initialize schema
-    initializeSchema();
+      // Enable foreign keys
+      db.run('PRAGMA foreign_keys = ON', (err) => {
+        if (err) {
+          console.error('Error enabling foreign keys:', err);
+        }
+      });
+
+      // Initialize schema
+      initializeSchema();
+    } catch (error) {
+      console.error('Database initialization error:', error);
+      throw error;
+    }
   }
 
   return db;

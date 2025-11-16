@@ -2,6 +2,9 @@ import { ApiError } from '../types/api.js';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
+// Request timeout (30 seconds)
+const REQUEST_TIMEOUT = 30000;
+
 async function fetchAPI<T>(
   endpoint: string,
   options: RequestInit = {},
@@ -18,22 +21,97 @@ async function fetchAPI<T>(
     headers['X-User-Id'] = userId;
   }
 
-  const response = await fetch(url, {
-    ...options,
-    headers,
-  });
+  // Create abort controller for timeout
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT);
 
-  if (!response.ok) {
-    const error: ApiError = await response.json().catch(() => ({
+  try {
+    const response = await fetch(url, {
+      ...options,
+      headers,
+      signal: controller.signal,
+    });
+
+    clearTimeout(timeoutId);
+
+    if (!response.ok) {
+      let error: ApiError;
+      try {
+        error = await response.json();
+        // Ensure error has expected structure
+        if (!error.error) {
+          error = {
+            error: {
+              code: 'HTTP_ERROR',
+              message: error.error?.message || `HTTP ${response.status}: ${response.statusText}`,
+            },
+          };
+        }
+      } catch {
+        // If response is not JSON, create error object
+        error = {
+          error: {
+            code: 'HTTP_ERROR',
+            message: `HTTP ${response.status}: ${response.statusText}`,
+          },
+        };
+      }
+
+      // Enhance error messages for common status codes if not already set
+      if (response.status === 404 && error.error.code === 'HTTP_ERROR') {
+        error.error.code = 'NOT_FOUND';
+        error.error.message = error.error.message || 'Resource not found';
+      } else if (response.status === 400 && error.error.code === 'HTTP_ERROR') {
+        error.error.code = 'VALIDATION_ERROR';
+        error.error.message = error.error.message || 'Invalid request';
+      } else if (response.status === 500 && error.error.code === 'HTTP_ERROR') {
+        error.error.code = 'SERVER_ERROR';
+        error.error.message = error.error.message || 'Server error. Please try again.';
+      } else if (response.status === 503 && error.error.code === 'HTTP_ERROR') {
+        error.error.code = 'SERVICE_UNAVAILABLE';
+        error.error.message = 'Service temporarily unavailable. Please try again later.';
+      }
+
+      throw error;
+    }
+
+    return response.json();
+  } catch (error: any) {
+    clearTimeout(timeoutId);
+
+    // Handle network errors
+    if (error.name === 'AbortError' || error.name === 'TimeoutError') {
+      throw {
+        error: {
+          code: 'TIMEOUT_ERROR',
+          message: 'Request timed out. Please check your connection and try again.',
+        },
+      } as ApiError;
+    }
+
+    // Handle network/fetch errors
+    if (error instanceof TypeError && error.message.includes('fetch')) {
+      throw {
+        error: {
+          code: 'NETWORK_ERROR',
+          message: 'Network error. Please check your connection and try again.',
+        },
+      } as ApiError;
+    }
+
+    // Re-throw API errors
+    if (error.error) {
+      throw error;
+    }
+
+    // Unknown error
+    throw {
       error: {
         code: 'UNKNOWN_ERROR',
-        message: `HTTP ${response.status}: ${response.statusText}`,
+        message: error.message || 'An unexpected error occurred',
       },
-    }));
-    throw error;
+    } as ApiError;
   }
-
-  return response.json();
 }
 
 export const api = {

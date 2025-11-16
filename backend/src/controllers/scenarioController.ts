@@ -65,6 +65,56 @@ export const makeDecision = async (req: Request, res: Response) => {
     const { id } = req.params;
     const { decisionPointId, choiceId, currentState }: ScenarioDecisionRequest = req.body;
 
+    // Validate required fields
+    if (!id || typeof id !== 'string') {
+      return res.status(400).json({
+        error: {
+          code: 'VALIDATION_ERROR',
+          message: 'Scenario ID is required',
+        },
+      });
+    }
+
+    if (!decisionPointId || typeof decisionPointId !== 'string') {
+      return res.status(400).json({
+        error: {
+          code: 'VALIDATION_ERROR',
+          message: 'decisionPointId is required',
+        },
+      });
+    }
+
+    if (!choiceId || typeof choiceId !== 'string') {
+      return res.status(400).json({
+        error: {
+          code: 'VALIDATION_ERROR',
+          message: 'choiceId is required',
+        },
+      });
+    }
+
+    if (!currentState || typeof currentState !== 'object') {
+      return res.status(400).json({
+        error: {
+          code: 'VALIDATION_ERROR',
+          message: 'currentState is required and must be an object',
+        },
+      });
+    }
+
+    // Validate currentState structure
+    const requiredStateFields = ['savings', 'debt', 'monthlyIncome', 'monthlyExpenses', 'stressLevel', 'financialKnowledge'];
+    for (const field of requiredStateFields) {
+      if (currentState[field] === undefined || typeof currentState[field] !== 'number') {
+        return res.status(400).json({
+          error: {
+            code: 'VALIDATION_ERROR',
+            message: `currentState.${field} is required and must be a number`,
+          },
+        });
+      }
+    }
+
     const scenario = scenarios.find(s => s.id === id);
     if (!scenario) {
       return res.status(404).json({
@@ -132,28 +182,49 @@ export const makeDecision = async (req: Request, res: Response) => {
     }
 
     // Get user ID from session or request (for now, using temp ID if not provided)
-    // TODO: Implement proper session/auth in production
     const userId = req.body.userId || req.headers['x-user-id'] || 'temp-user-id';
+    
+    if (!userId || typeof userId !== 'string') {
+      return res.status(400).json({
+        error: {
+          code: 'VALIDATION_ERROR',
+          message: 'User ID is required',
+        },
+      });
+    }
 
-    // Update progress in database
-    const financialHealthScore = Math.max(0, Math.min(100, 50 + newState.financialKnowledge * 5));
-    const progress = await progressService.addXP(userId, xpEarned);
-    const updatedProgress = await progressService.updateProgress(userId, {
-      financialHealthScore,
-    });
+    try {
+      // Update progress in database
+      const financialHealthScore = Math.max(0, Math.min(100, 50 + newState.financialKnowledge * 5));
+      const progress = await progressService.addXP(userId, xpEarned);
+      const updatedProgress = await progressService.updateProgress(userId, {
+        financialHealthScore,
+      });
 
-    res.json({
-      newState,
-      aiReflection,
-      xpEarned,
-      progress: updatedProgress,
-    });
-  } catch (error) {
+      res.json({
+        newState,
+        aiReflection,
+        xpEarned,
+        progress: updatedProgress,
+      });
+    } catch (dbError: any) {
+      console.error('Database error making decision:', dbError);
+      // Still return the decision result even if progress save fails
+      res.json({
+        newState,
+        aiReflection,
+        xpEarned,
+        progress: null, // Indicate progress update failed
+        warning: 'Decision processed but progress was not saved. Please try again.',
+      });
+    }
+  } catch (error: any) {
     console.error('Error making decision:', error);
+    const errorMessage = error?.message || 'Failed to process decision';
     res.status(500).json({
       error: {
         code: 'INTERNAL_ERROR',
-        message: 'Failed to process decision',
+        message: errorMessage,
       },
     });
   }
@@ -163,6 +234,26 @@ export const completeScenario = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const { finalState } = req.body;
+
+    // Validate scenario ID
+    if (!id || typeof id !== 'string') {
+      return res.status(400).json({
+        error: {
+          code: 'VALIDATION_ERROR',
+          message: 'Scenario ID is required',
+        },
+      });
+    }
+
+    // Validate finalState
+    if (!finalState || typeof finalState !== 'object') {
+      return res.status(400).json({
+        error: {
+          code: 'VALIDATION_ERROR',
+          message: 'finalState is required and must be an object',
+        },
+      });
+    }
 
     const scenario = scenarios.find(s => s.id === id);
     if (!scenario) {
@@ -174,30 +265,58 @@ export const completeScenario = async (req: Request, res: Response) => {
       });
     }
 
+    // Validate finalState structure
+    if (finalState.financialKnowledge === undefined || typeof finalState.financialKnowledge !== 'number') {
+      return res.status(400).json({
+        error: {
+          code: 'VALIDATION_ERROR',
+          message: 'finalState.financialKnowledge is required and must be a number',
+        },
+      });
+    }
+
     // Award bonus XP for completing the scenario
     const xpEarned = 100;
     const financialHealthScore = Math.max(0, Math.min(100, 50 + finalState.financialKnowledge * 5));
 
     // Get user ID from session or request (for now, using temp ID if not provided)
-    // TODO: Implement proper session/auth in production
     const userId = req.body.userId || req.headers['x-user-id'] || 'temp-user-id';
+    
+    if (!userId || typeof userId !== 'string') {
+      return res.status(400).json({
+        error: {
+          code: 'VALIDATION_ERROR',
+          message: 'User ID is required',
+        },
+      });
+    }
 
-    // Update progress in database
-    const progress = await progressService.completeScenario(userId, id, xpEarned);
-    const updatedProgress = await progressService.updateProgress(userId, {
-      financialHealthScore,
-    });
+    try {
+      // Update progress in database
+      const progress = await progressService.completeScenario(userId, id, xpEarned);
+      const updatedProgress = await progressService.updateProgress(userId, {
+        financialHealthScore,
+      });
 
-    res.json({
-      xpEarned,
-      progress: updatedProgress,
-    });
-  } catch (error) {
+      res.json({
+        xpEarned,
+        progress: updatedProgress,
+      });
+    } catch (dbError: any) {
+      console.error('Database error completing scenario:', dbError);
+      res.status(500).json({
+        error: {
+          code: 'DATABASE_ERROR',
+          message: 'Failed to save progress. Please try again.',
+        },
+      });
+    }
+  } catch (error: any) {
     console.error('Error completing scenario:', error);
     res.status(500).json({
       error: {
         code: 'INTERNAL_ERROR',
-        message: 'Failed to complete scenario',
+        message: error?.message || 'Failed to complete scenario',
       },
     });
   }

@@ -84,11 +84,32 @@ Provide a clear, encouraging explanation (2-3 paragraphs) that:
 
 Keep it positive, inclusive, and empowering. Avoid condescending language.`;
 
-    const result = await model.generateContent(prompt);
+    // Add timeout to Gemini API calls (30 seconds)
+    const timeoutPromise = new Promise<never>((_, reject) => {
+      setTimeout(() => reject(new Error('AI request timed out. Please try again.')), 30000);
+    });
+
+    const result = await Promise.race([
+      model.generateContent(prompt),
+      timeoutPromise,
+    ]) as any;
+
     const response = await result.response;
     return response.text();
-  } catch (error) {
+  } catch (error: any) {
     console.error('Gemini API error:', error);
+    
+    // Handle specific error types
+    if (error.message?.includes('timeout')) {
+      throw new Error('AI request timed out. Please try again.');
+    }
+    if (error.message?.includes('API key') || error.message?.includes('authentication')) {
+      throw new Error('AI service authentication failed. Please check configuration.');
+    }
+    if (error.message?.includes('quota') || error.message?.includes('rate limit')) {
+      throw new Error('AI service is temporarily unavailable. Please try again later.');
+    }
+    
     throw new Error('Failed to generate explanation. Please try again.');
   }
 }
@@ -127,11 +148,32 @@ Provide an encouraging explanation (2-3 paragraphs) that:
 
 Keep it positive, inclusive, and motivating. Avoid making assumptions about the user's current financial situation.`;
 
-    const result = await model.generateContent(prompt);
+    // Add timeout to Gemini API calls (30 seconds)
+    const timeoutPromise = new Promise<never>((_, reject) => {
+      setTimeout(() => reject(new Error('AI request timed out. Please try again.')), 30000);
+    });
+
+    const result = await Promise.race([
+      model.generateContent(prompt),
+      timeoutPromise,
+    ]) as any;
+
     const response = await result.response;
     return response.text();
-  } catch (error) {
+  } catch (error: any) {
     console.error('Gemini API error:', error);
+    
+    // Handle specific error types
+    if (error.message?.includes('timeout')) {
+      throw new Error('AI request timed out. Please try again.');
+    }
+    if (error.message?.includes('API key') || error.message?.includes('authentication')) {
+      throw new Error('AI service authentication failed. Please check configuration.');
+    }
+    if (error.message?.includes('quota') || error.message?.includes('rate limit')) {
+      throw new Error('AI service is temporarily unavailable. Please try again later.');
+    }
+    
     throw new Error('Failed to generate explanation. Please try again.');
   }
 }
