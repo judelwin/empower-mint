@@ -8,10 +8,41 @@ import aiRoutes from './routes/ai.js';
 
 const app = express();
 
-// Middleware
+// Middleware - CORS configuration
+// Allowed origins are FRONTEND URLs that can make requests to this backend
+// On Render: Set FRONTEND_URL environment variable to your frontend service URL
+// Example: FRONTEND_URL=https://empower-mint.onrender.com
+const frontendUrl = process.env.FRONTEND_URL;
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:5174',
+  'https://empower-mint.onrender.com', // Default Render frontend URL
+  // Add FRONTEND_URL from environment if set
+  ...(frontendUrl ? [frontendUrl] : []),
+].filter((url): url is string => Boolean(url)); // Remove undefined/null values
+
+console.log('🌐 CORS allowed origins:', allowedOrigins);
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      // In production, only allow listed origins
+      if (process.env.NODE_ENV === 'production') {
+        callback(new Error('Not allowed by CORS'));
+      } else {
+        // In development, allow any origin
+        callback(null, true);
+      }
+    }
+  },
   credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-User-Id'],
 }));
 app.use(express.json());
 
