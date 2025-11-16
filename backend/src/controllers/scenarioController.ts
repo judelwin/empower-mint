@@ -107,8 +107,28 @@ export const makeDecision = async (req: Request, res: Response) => {
     // Award XP based on decision quality (simplified - better knowledge gain = more XP)
     const xpEarned = Math.max(10, Math.min(50, newState.financialKnowledge - currentState.financialKnowledge + 20));
 
-    // TODO: Generate AI reflection using Gemini (will be implemented in Batch 12)
-    const aiReflection = `You chose: ${choice.text}. This decision will have both short-term and long-term impacts on your financial situation. The AI reflection will be generated here once Gemini integration is complete.`;
+    // Generate AI reflection using Gemini (fallback if not available)
+    let aiReflection = `You chose: ${choice.text}. This decision will have both short-term and long-term impacts on your financial situation.`;
+    
+    try {
+      // Try to get AI reflection if Gemini is configured
+      const { reflectOnScenarioDecision } = await import('../services/geminiService.js');
+      const stateChange = {
+        savingsChange: choice.shortTermImpact.savingsChange + choice.longTermImpact.savingsChange,
+        debtChange: choice.shortTermImpact.debtChange + choice.longTermImpact.debtChange,
+        stressChange: choice.shortTermImpact.stressChange + choice.longTermImpact.stressChange,
+        knowledgeChange: choice.shortTermImpact.knowledgeChange + choice.longTermImpact.knowledgeChange,
+      };
+      aiReflection = await reflectOnScenarioDecision({
+        scenarioTitle: scenario.title,
+        decisionText: decisionPoint.prompt,
+        choiceText: choice.text,
+        stateChange,
+      });
+    } catch (error) {
+      // Fallback to simple message if Gemini fails
+      console.log('Using fallback reflection (Gemini may not be configured)');
+    }
 
     // TODO: Update user progress in database (will be implemented in Batch 17)
     const progress = {

@@ -4,6 +4,7 @@ import healthRoutes from './routes/health.js';
 import onboardingRoutes from './routes/onboarding.js';
 import lessonsRoutes from './routes/lessons.js';
 import scenariosRoutes from './routes/scenarios.js';
+import aiRoutes from './routes/ai.js';
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use('/api', healthRoutes);
 app.use('/api/onboarding', onboardingRoutes);
 app.use('/api/lessons', lessonsRoutes);
 app.use('/api/scenarios', scenariosRoutes);
+app.use('/api/ai', aiRoutes);
 
 // Root route
 app.get('/', (req, res) => {
