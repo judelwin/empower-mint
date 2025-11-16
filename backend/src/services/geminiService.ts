@@ -63,7 +63,7 @@ export async function explainConcept(params: ExplainConceptParams): Promise<stri
 
   try {
     const client = getGeminiClient();
-    const model = client.getGenerativeModel({ model: 'gemini-pro' });
+    const model = client.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
     const experienceLevel = params.userProfile?.experienceLevel;
     const learningStyle = params.userProfile?.learningStyle;
@@ -121,7 +121,7 @@ export async function explainWealthSimulation(params: SimulateWealthParams): Pro
 
   try {
     const client = getGeminiClient();
-    const model = client.getGenerativeModel({ model: 'gemini-pro' });
+    const model = client.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
     const experienceLevel = params.userProfile?.experienceLevel;
     const learningStyle = params.userProfile?.learningStyle;
@@ -185,7 +185,7 @@ export async function reflectOnScenarioDecision(params: ReflectScenarioParams): 
 
   try {
     const client = getGeminiClient();
-    const model = client.getGenerativeModel({ model: 'gemini-pro' });
+    const model = client.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
     const experienceLevel = params.userProfile?.experienceLevel;
     const learningStyle = params.userProfile?.learningStyle;
