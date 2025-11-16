@@ -27,6 +27,7 @@ export default function ScenarioPlayer({
   const [aiReflection, setAiReflection] = useState<string>('');
   const [scenarioComplete, setScenarioComplete] = useState(false);
   const [totalXPEarned, setTotalXPEarned] = useState(0);
+  const [error, setError] = useState<string | null>(null);
 
   const currentDecisionPoint = scenario.decisionPoints[currentDecisionIndex];
   const isLastDecision = currentDecisionIndex === scenario.decisionPoints.length - 1;
@@ -38,6 +39,7 @@ export default function ScenarioPlayer({
   const handleSubmitDecision = async () => {
     if (!selectedChoice || !currentDecisionPoint) return;
 
+    setError(null);
     try {
       const result = await onDecision(
         currentDecisionPoint.id,
@@ -49,8 +51,10 @@ export default function ScenarioPlayer({
       setAiReflection(result.aiReflection);
       setTotalXPEarned(totalXPEarned + result.xpEarned);
       setShowReflection(true);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to submit decision:', error);
+      const errorMessage = error?.error?.message || 'Failed to submit decision. Please try again.';
+      setError(errorMessage);
     }
   };
 
@@ -66,12 +70,15 @@ export default function ScenarioPlayer({
   };
 
   const handleCompleteScenario = async () => {
+    setError(null);
     try {
       const result = await onComplete(currentState);
       setTotalXPEarned(totalXPEarned + result.xpEarned);
       setScenarioComplete(true);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to complete scenario:', error);
+      const errorMessage = error?.error?.message || 'Failed to complete scenario. Please try again.';
+      setError(errorMessage);
     }
   };
 
@@ -268,6 +275,13 @@ export default function ScenarioPlayer({
           </div>
         </div>
       </Card>
+
+      {/* Error Message */}
+      {error && (
+        <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
+          {error}
+        </div>
+      )}
 
       {/* Decision Point */}
       <Card>

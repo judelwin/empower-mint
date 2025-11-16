@@ -15,6 +15,7 @@ export default function LessonDetail() {
   const { loading, error, execute } = useApi();
   const [completing, setCompleting] = useState(false);
   const [explaining, setExplaining] = useState(false);
+  const [completionError, setCompletionError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!id) return;
@@ -32,6 +33,7 @@ export default function LessonDetail() {
     if (!id) return;
 
     setCompleting(true);
+    setCompletionError(null);
     try {
       const response = await api.completeLesson(id, {
         score,
@@ -40,8 +42,10 @@ export default function LessonDetail() {
       });
       addXP(response.xpEarned);
       updateProgress(response.progress);
-    } catch (err) {
+    } catch (err: any) {
       console.error('Failed to complete lesson:', err);
+      const errorMessage = err?.error?.message || 'Failed to complete lesson. Please try again.';
+      setCompletionError(errorMessage);
     } finally {
       setCompleting(false);
     }
@@ -98,6 +102,11 @@ export default function LessonDetail() {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      {completionError && (
+        <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
+          {completionError}
+        </div>
+      )}
       <LessonViewer
         lesson={lesson}
         onComplete={handleComplete}
