@@ -1,6 +1,13 @@
 import { ApiError } from '../types/api.js';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+// Ensure API_BASE_URL always ends with /api
+// On Render: VITE_API_URL should be set to https://your-backend.onrender.com/api
+// Or just https://your-backend.onrender.com (we'll append /api if missing)
+let API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+if (API_BASE_URL && !API_BASE_URL.endsWith('/api')) {
+  // Remove trailing slash if present, then append /api
+  API_BASE_URL = API_BASE_URL.replace(/\/$/, '') + '/api';
+}
 
 // Request timeout (30 seconds)
 const REQUEST_TIMEOUT = 30000;
