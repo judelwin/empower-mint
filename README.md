@@ -96,8 +96,6 @@ empowermint/
 ├── backend/           # Express backend API
 ├── README.md          # This file
 ├── Architecture.md    # System architecture documentation
-├── DEMO_SCRIPT.md     # Demo walkthrough guide
-└── PITCH_SCRIPT.md    # Pitch presentation script
 ```
 
 ## Development
