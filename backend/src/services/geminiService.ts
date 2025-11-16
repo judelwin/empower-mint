@@ -65,7 +65,7 @@ export async function explainConcept(params: ExplainConceptParams): Promise<stri
     const client = getGeminiClient();
     // Use gemini-1.5-flash (free tier compatible) or fallback to gemini-1.5-pro
     // Both work with free API keys
-    const model = client.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    const model = client.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
     const experienceLevel = params.userProfile?.experienceLevel;
     const learningStyle = params.userProfile?.learningStyle;
@@ -127,9 +127,8 @@ export async function explainWealthSimulation(params: SimulateWealthParams): Pro
 
   try {
     const client = getGeminiClient();
-    // Use gemini-1.5-flash (free tier compatible) or fallback to gemini-1.5-pro
-    // Both work with free API keys
-    const model = client.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    // Use gemini-2.5-flash (works with free tier)
+    const model = client.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
     const experienceLevel = params.userProfile?.experienceLevel;
     const learningStyle = params.userProfile?.learningStyle;
@@ -197,9 +196,8 @@ export async function reflectOnScenarioDecision(params: ReflectScenarioParams): 
 
   try {
     const client = getGeminiClient();
-    // Use gemini-1.5-flash (free tier compatible) or fallback to gemini-1.5-pro
-    // Both work with free API keys
-    const model = client.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    // Use gemini-2.5-flash (works with free tier)
+    const model = client.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
     const experienceLevel = params.userProfile?.experienceLevel;
     const learningStyle = params.userProfile?.learningStyle;

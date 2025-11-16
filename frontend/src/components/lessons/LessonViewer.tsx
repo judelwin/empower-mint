@@ -135,7 +135,25 @@ export default function LessonViewer({ lesson, onComplete, onExplain, loading }:
             <div className="mt-4">
               {aiExplanation ? (
                 <div className="prose max-w-none text-gray-700 leading-relaxed">
-                  <p>{aiExplanation}</p>
+                  {aiExplanation.split('\n\n').map((paragraph, index) => (
+                    paragraph.trim() && (
+                      <p key={index} className="mb-4 last:mb-0">
+                        {paragraph.trim().split('\n').map((line, lineIndex, lines) => {
+                          // Convert markdown to HTML: **bold** first, then *italic*
+                          // Process bold first (replace **text**), then italic (replace remaining single *text*)
+                          let formattedLine = line
+                            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                            .replace(/\*([^*]+?)\*/g, '<em>$1</em>');
+                          return (
+                            <span key={lineIndex}>
+                              <span dangerouslySetInnerHTML={{ __html: formattedLine }} />
+                              {lineIndex < lines.length - 1 && <br />}
+                            </span>
+                          );
+                        })}
+                      </p>
+                    )
+                  ))}
                 </div>
               ) : (
                 <div className="text-gray-500 text-sm">
