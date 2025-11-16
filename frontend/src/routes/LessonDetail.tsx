@@ -1,16 +1,75 @@
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { api } from '../services/api.js';
+import { useApi } from '../hooks/useApi.js';
+import { useProgress } from '../context/ProgressContext.js';
+import LessonViewer from '../components/lessons/LessonViewer.js';
+import { Lesson } from '../types/lesson.js';
 
-function LessonDetail() {
+export default function LessonDetail() {
   const { id } = useParams();
+  const { addXP, updateProgress } = useProgress();
+  const [lesson, setLesson] = useState<Lesson | null>(null);
+  const { loading, error, execute } = useApi();
+  const [completing, setCompleting] = useState(false);
+
+  useEffect(() => {
+    if (!id) return;
+
+    execute(async () => {
+      const response = await api.getLessonById(id);
+      setLesson(response.lesson);
+      return response;
+    }).catch(() => {
+      // Error handled by useApi hook
+    });
+  }, [id]);
+
+  const handleComplete = async (score: number, answers: Array<{ questionId: string; selectedAnswer: number }>) => {
+    if (!id) return;
+
+    setCompleting(true);
+    try {
+      const response = await api.completeLesson(id, { score, answers });
+      addXP(response.xpEarned);
+      updateProgress(response.progress);
+    } catch (err) {
+      console.error('Failed to complete lesson:', err);
+    } finally {
+      setCompleting(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <div className="text-center py-8 text-gray-600">Loading lesson...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
+          {error.error.message || 'Failed to load lesson'}
+        </div>
+      </div>
+    );
+  }
+
+  if (!lesson) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <div className="text-center py-8 text-gray-600">Lesson not found</div>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">Lesson Detail</h1>
-      <p className="text-gray-600">Lesson ID: {id}</p>
-      <p className="text-gray-600 mt-4">Lesson content will be implemented here...</p>
+      <LessonViewer lesson={lesson} onComplete={handleComplete} loading={completing} />
     </div>
   );
 }
-
-export default LessonDetail;
 
