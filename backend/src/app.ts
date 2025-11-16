@@ -1,6 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 import healthRoutes from './routes/health.js';
+import onboardingRoutes from './routes/onboarding.js';
+import lessonsRoutes from './routes/lessons.js';
+import scenariosRoutes from './routes/scenarios.js';
 
 const app = express();
 
@@ -13,6 +16,9 @@ app.use(express.json());
 
 // Routes
 app.use('/api', healthRoutes);
+app.use('/api/onboarding', onboardingRoutes);
+app.use('/api/lessons', lessonsRoutes);
+app.use('/api/scenarios', scenariosRoutes);
 
 // Root route
 app.get('/', (req, res) => {
