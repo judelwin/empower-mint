@@ -33,7 +33,11 @@ export default function LessonDetail() {
 
     setCompleting(true);
     try {
-      const response = await api.completeLesson(id, { score, answers });
+      const response = await api.completeLesson(id, {
+        score,
+        answers,
+        userId: userProfile?.id,
+      });
       addXP(response.xpEarned);
       updateProgress(response.progress);
     } catch (err) {

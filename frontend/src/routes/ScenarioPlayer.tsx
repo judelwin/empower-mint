@@ -3,12 +3,14 @@ import { useParams } from 'react-router-dom';
 import { api } from '../services/api.js';
 import { useApi } from '../hooks/useApi.js';
 import { useProgress } from '../context/ProgressContext.js';
+import { useUser } from '../context/UserContext.js';
 import ScenarioPlayerComponent from '../components/scenarios/ScenarioPlayer.js';
 import { Scenario, ScenarioState } from '../types/scenario.js';
 
 export default function ScenarioPlayer() {
   const { id } = useParams();
   const { addXP, updateProgress } = useProgress();
+  const { userProfile } = useUser();
   const [scenario, setScenario] = useState<Scenario | null>(null);
   const { loading, error, execute } = useApi();
   const [processing, setProcessing] = useState(false);
@@ -34,7 +36,12 @@ export default function ScenarioPlayer() {
 
     setProcessing(true);
     try {
-      const response = await api.makeDecision(id, { decisionPointId, choiceId, currentState });
+      const response = await api.makeDecision(id, {
+        decisionPointId,
+        choiceId,
+        currentState,
+        userId: userProfile?.id,
+      });
       addXP(response.xpEarned);
       updateProgress(response.progress);
       return {
@@ -52,7 +59,10 @@ export default function ScenarioPlayer() {
 
     setProcessing(true);
     try {
-      const response = await api.completeScenario(id, { finalState });
+      const response = await api.completeScenario(id, {
+        finalState,
+        userId: userProfile?.id,
+      });
       addXP(response.xpEarned);
       updateProgress(response.progress);
       return { xpEarned: response.xpEarned };

@@ -39,6 +39,7 @@ lerna-debug.log*
 *.db
 *.sqlite
 *.sqlite3
+backend/data/
 
 # Temporary files
 *.tmp

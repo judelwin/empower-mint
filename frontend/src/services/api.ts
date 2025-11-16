@@ -4,15 +4,23 @@ const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api'
 
 async function fetchAPI<T>(
   endpoint: string,
-  options: RequestInit = {}
+  options: RequestInit = {},
+  userId?: string
 ): Promise<T> {
   const url = `${API_BASE_URL}${endpoint}`;
+  const headers: HeadersInit = {
+    'Content-Type': 'application/json',
+    ...options.headers,
+  };
+
+  // Add user ID header if provided
+  if (userId) {
+    headers['X-User-Id'] = userId;
+  }
+
   const response = await fetch(url, {
     ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      ...options.headers,
-    },
+    headers,
   });
 
   if (!response.ok) {
@@ -44,11 +52,15 @@ export const api = {
   getLessonById: (id: string) => 
     fetchAPI<{ lesson: any }>(`/lessons/${id}`),
 
-  completeLesson: (id: string, data: { score: number; answers: Array<{ questionId: string; selectedAnswer: number }> }) =>
-    fetchAPI<{ xpEarned: number; progress: any }>(`/lessons/${id}/complete`, {
-      method: 'POST',
-      body: JSON.stringify(data),
-    }),
+  completeLesson: (id: string, data: { score: number; answers: Array<{ questionId: string; selectedAnswer: number }>; userId?: string }) =>
+    fetchAPI<{ xpEarned: number; progress: any }>(
+      `/lessons/${id}/complete`,
+      {
+        method: 'POST',
+        body: JSON.stringify(data),
+      },
+      data.userId
+    ),
 
   // Scenarios
   getScenarios: (params?: { category?: string; difficulty?: number }) => {
@@ -62,17 +74,25 @@ export const api = {
   getScenarioById: (id: string) =>
     fetchAPI<{ scenario: any }>(`/scenarios/${id}`),
 
-  makeDecision: (id: string, data: { decisionPointId: string; choiceId: string; currentState: any }) =>
-    fetchAPI<{ newState: any; aiReflection: string; xpEarned: number; progress: any }>(`/scenarios/${id}/decision`, {
-      method: 'POST',
-      body: JSON.stringify(data),
-    }),
+  makeDecision: (id: string, data: { decisionPointId: string; choiceId: string; currentState: any; userId?: string }) =>
+    fetchAPI<{ newState: any; aiReflection: string; xpEarned: number; progress: any }>(
+      `/scenarios/${id}/decision`,
+      {
+        method: 'POST',
+        body: JSON.stringify(data),
+      },
+      data.userId
+    ),
 
-  completeScenario: (id: string, data: { finalState: any }) =>
-    fetchAPI<{ xpEarned: number; progress: any }>(`/scenarios/${id}/complete`, {
-      method: 'POST',
-      body: JSON.stringify(data),
-    }),
+  completeScenario: (id: string, data: { finalState: any; userId?: string }) =>
+    fetchAPI<{ xpEarned: number; progress: any }>(
+      `/scenarios/${id}/complete`,
+      {
+        method: 'POST',
+        body: JSON.stringify(data),
+      },
+      data.userId
+    ),
 
   // AI
   explainConcept: (data: { concept: string; context?: string; userProfile?: any }) =>

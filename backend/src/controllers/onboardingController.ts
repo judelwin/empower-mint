@@ -1,8 +1,10 @@
 import { Request, Response } from 'express';
 import { OnboardingRequest, OnboardingResponse, UserProfile, ExperienceLevel, LearningStyle } from '../types/user.js';
 import { v4 as uuidv4 } from 'uuid';
+import * as userService from '../services/userService.js';
+import * as progressService from '../services/progressService.js';
 
-export const completeOnboarding = (req: Request, res: Response) => {
+export const completeOnboarding = async (req: Request, res: Response) => {
   try {
     const { experienceLevel, financialGoals, riskComfort, learningStyle }: OnboardingRequest = req.body;
 
@@ -57,6 +59,20 @@ export const completeOnboarding = (req: Request, res: Response) => {
         colorblindMode: 'none',
       },
     };
+
+    // Save user to database
+    await userService.createUser(userProfile);
+
+    // Initialize progress
+    await progressService.saveProgress({
+      userId: userProfile.id,
+      xp: 0,
+      level: 1,
+      completedLessonIds: [],
+      completedScenarioIds: [],
+      financialHealthScore: 50,
+      lastActivity: new Date(),
+    });
 
     // Recommend lessons and scenarios based on experience level
     const recommendedLessons: string[] = [];

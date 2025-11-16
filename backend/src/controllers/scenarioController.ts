@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { Scenario, ScenarioCategory, DifficultyLevel, ScenarioState, ScenarioDecisionRequest } from '../types/scenario.js';
 import scenariosData from '../data/scenarios.json' assert { type: 'json' };
+import * as progressService from '../services/progressService.js';
 
 const scenarios: Scenario[] = scenariosData as Scenario[];
 
@@ -130,22 +131,22 @@ export const makeDecision = async (req: Request, res: Response) => {
       console.log('Using fallback reflection (Gemini may not be configured)');
     }
 
-    // TODO: Update user progress in database (will be implemented in Batch 17)
-    const progress = {
-      userId: 'temp-user-id', // Will be replaced with actual user ID
-      xp: xpEarned,
-      level: Math.floor(xpEarned / 100),
-      completedLessonIds: [],
-      completedScenarioIds: [],
-      financialHealthScore: Math.max(0, Math.min(100, 50 + newState.financialKnowledge * 5)),
-      lastActivity: new Date(),
-    };
+    // Get user ID from session or request (for now, using temp ID if not provided)
+    // TODO: Implement proper session/auth in production
+    const userId = req.body.userId || req.headers['x-user-id'] || 'temp-user-id';
+
+    // Update progress in database
+    const financialHealthScore = Math.max(0, Math.min(100, 50 + newState.financialKnowledge * 5));
+    const progress = await progressService.addXP(userId, xpEarned);
+    const updatedProgress = await progressService.updateProgress(userId, {
+      financialHealthScore,
+    });
 
     res.json({
       newState,
       aiReflection,
       xpEarned,
-      progress,
+      progress: updatedProgress,
     });
   } catch (error) {
     console.error('Error making decision:', error);
@@ -158,7 +159,7 @@ export const makeDecision = async (req: Request, res: Response) => {
   }
 };
 
-export const completeScenario = (req: Request, res: Response) => {
+export const completeScenario = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const { finalState } = req.body;
@@ -177,20 +178,19 @@ export const completeScenario = (req: Request, res: Response) => {
     const xpEarned = 100;
     const financialHealthScore = Math.max(0, Math.min(100, 50 + finalState.financialKnowledge * 5));
 
-    // TODO: Update user progress in database (will be implemented in Batch 17)
-    const progress = {
-      userId: 'temp-user-id',
-      xp: xpEarned,
-      level: Math.floor(xpEarned / 100),
-      completedLessonIds: [],
-      completedScenarioIds: [id],
+    // Get user ID from session or request (for now, using temp ID if not provided)
+    // TODO: Implement proper session/auth in production
+    const userId = req.body.userId || req.headers['x-user-id'] || 'temp-user-id';
+
+    // Update progress in database
+    const progress = await progressService.completeScenario(userId, id, xpEarned);
+    const updatedProgress = await progressService.updateProgress(userId, {
       financialHealthScore,
-      lastActivity: new Date(),
-    };
+    });
 
     res.json({
       xpEarned,
-      progress,
+      progress: updatedProgress,
     });
   } catch (error) {
     console.error('Error completing scenario:', error);
