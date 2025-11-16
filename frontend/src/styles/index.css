@@ -16,11 +16,67 @@
     @apply bg-gray-50 text-gray-900;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
   }
+
+  /* High Contrast Mode */
+  body.high-contrast {
+    @apply bg-white text-black;
+  }
+
+  body.high-contrast .bg-gray-50 {
+    @apply bg-white;
+  }
+
+  body.high-contrast .text-gray-600 {
+    @apply text-black;
+  }
+
+  body.high-contrast .text-gray-700 {
+    @apply text-black;
+  }
+
+  body.high-contrast .border-gray-200 {
+    @apply border-black border-2;
+  }
+
+  /* Colorblind Mode Adjustments */
+  body.protanopia .text-primary-600,
+  body.protanopia .bg-primary-600 {
+    color: #2563eb !important;
+    background-color: #2563eb !important;
+  }
+
+  body.deuteranopia .text-primary-600,
+  body.deuteranopia .bg-primary-600 {
+    color: #059669 !important;
+    background-color: #059669 !important;
+  }
+
+  body.tritanopia .text-primary-600,
+  body.tritanopia .bg-primary-600 {
+    color: #dc2626 !important;
+    background-color: #dc2626 !important;
+  }
+
+  /* Reduced Motion */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 }
 
 @layer utilities {
   .focus-ring {
     @apply focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+  }
+
+  .focus-ring:focus-visible {
+    outline: 2px solid #0284c7;
+    outline-offset: 2px;
   }
 }
 
