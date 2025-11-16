@@ -1,5 +1,4 @@
 import { useState, useCallback } from 'react';
-import { api } from '../services/api.js';
 import { ApiError } from '../types/api.js';
 
 interface UseApiState<T> {

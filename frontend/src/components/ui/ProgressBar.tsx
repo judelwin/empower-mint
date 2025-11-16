@@ -1,5 +1,3 @@
-import { ReactNode } from 'react';
-
 interface ProgressBarProps {
   value: number;
   max: number;

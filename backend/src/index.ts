@@ -6,8 +6,9 @@ import { closeDatabase } from './db/database.js';
 // Initialize database connection
 getDatabase();
 
-app.listen(env.port, () => {
-  console.log(`🚀 EmpowerMint Backend API running on http://localhost:${env.port}`);
+// Bind to 0.0.0.0 for Render/cloud hosting (allows external connections)
+app.listen(env.port, '0.0.0.0', () => {
+  console.log(`🚀 EmpowerMint Backend API running on http://0.0.0.0:${env.port}`);
   console.log(`📝 Environment: ${env.nodeEnv}`);
   console.log(`💾 Database: SQLite at ${process.env.DATABASE_PATH || 'backend/data/empowermint.db'}`);
   if (!env.geminiApiKey) {

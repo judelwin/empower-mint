@@ -23,7 +23,7 @@ app.use('/api/scenarios', scenariosRoutes);
 app.use('/api/ai', aiRoutes);
 
 // Root route
-app.get('/', (req, res) => {
+app.get('/', (_req, res) => {
   res.json({ 
     message: 'EmpowerMint Backend API',
     version: '0.1.0',
@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
 });
 
 // 404 handler
-app.use((req, res) => {
+app.use((_req, res) => {
   res.status(404).json({
     error: {
       code: 'NOT_FOUND',
@@ -41,7 +41,7 @@ app.use((req, res) => {
 });
 
 // Error handler
-app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
+app.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   console.error('Error:', err);
   res.status(500).json({
     error: {

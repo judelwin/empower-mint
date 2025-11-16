@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { OnboardingRequest, OnboardingResponse, UserProfile, ExperienceLevel, LearningStyle } from '../types/user.js';
+import { OnboardingRequest, OnboardingResponse, UserProfile } from '../types/user.js';
 import { v4 as uuidv4 } from 'uuid';
 import * as userService from '../services/userService.js';
 import * as progressService from '../services/progressService.js';
@@ -97,6 +97,7 @@ export const completeOnboarding = async (req: Request, res: Response) => {
     };
 
     res.json(response);
+    return;
   } catch (error) {
     console.error('Error completing onboarding:', error);
     res.status(500).json({
@@ -105,6 +106,7 @@ export const completeOnboarding = async (req: Request, res: Response) => {
         message: 'Failed to complete onboarding',
       },
     });
+    return;
   }
 };
 

@@ -24,6 +24,7 @@ export const explainConcept = async (req: Request, res: Response) => {
     });
 
     res.json({ explanation });
+    return;
   } catch (error: any) {
     console.error('Error explaining concept:', error);
     res.status(500).json({
@@ -32,6 +33,7 @@ export const explainConcept = async (req: Request, res: Response) => {
         message: error.message || 'Failed to generate explanation',
       },
     });
+    return;
   }
 };
 
@@ -134,6 +136,7 @@ export const simulateWealth = async (req: Request, res: Response) => {
       dataPoints,
       explanation,
     });
+    return;
   } catch (error: any) {
     console.error('Error simulating wealth:', error);
     res.status(500).json({
@@ -142,13 +145,14 @@ export const simulateWealth = async (req: Request, res: Response) => {
         message: error.message || 'Failed to simulate wealth',
       },
     });
+    return;
   }
 };
 
 export const reflectScenarioDecision = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const { decisionPointId, choiceId, currentState }: ScenarioDecisionRequest = req.body;
+    const { decisionPointId, choiceId, currentState: _currentState }: ScenarioDecisionRequest = req.body;
     const userProfile = req.body.userProfile; // Optional user profile from request
 
     const scenarios = scenariosData as any[];
@@ -199,6 +203,7 @@ export const reflectScenarioDecision = async (req: Request, res: Response) => {
     });
 
     res.json({ reflection });
+    return;
   } catch (error: any) {
     console.error('Error reflecting on scenario decision:', error);
     res.status(500).json({
@@ -207,6 +212,7 @@ export const reflectScenarioDecision = async (req: Request, res: Response) => {
         message: error.message || 'Failed to generate reflection',
       },
     });
+    return;
   }
 };
 

@@ -33,7 +33,7 @@ export async function completeLesson(userId: string, lessonId: string, xpEarned:
     completedLessonIds.push(lessonId);
   }
 
-  return addXP(userId, xpEarned).then((progress) =>
+  return addXP(userId, xpEarned).then(() =>
     updateProgress(userId, {
       completedLessonIds,
       lastActivity: new Date(),
@@ -49,7 +49,7 @@ export async function completeScenario(userId: string, scenarioId: string, xpEar
     completedScenarioIds.push(scenarioId);
   }
 
-  return addXP(userId, xpEarned).then((progress) =>
+  return addXP(userId, xpEarned).then(() =>
     updateProgress(userId, {
       completedScenarioIds,
       lastActivity: new Date(),

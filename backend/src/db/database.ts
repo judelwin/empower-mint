@@ -1,5 +1,4 @@
 import sqlite3 from 'sqlite3';
-import { promisify } from 'util';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { mkdirSync, existsSync } from 'fs';
@@ -238,7 +237,7 @@ export async function getProgress(userId: string): Promise<Progress | null> {
 }
 
 export async function updateProgress(userId: string, updates: Partial<Progress>): Promise<Progress> {
-  const database = getDatabase();
+  getDatabase(); // Ensure database is initialized
   const existing = await getProgress(userId);
   
   if (!existing) {

@@ -12,13 +12,11 @@ interface LessonViewerProps {
 }
 
 export default function LessonViewer({ lesson, onComplete, onExplain, loading }: LessonViewerProps) {
-  const [currentSection, setCurrentSection] = useState(0);
   const [showQuiz, setShowQuiz] = useState(false);
   const [quizCompleted, setQuizCompleted] = useState(false);
   const [showAIExplanation, setShowAIExplanation] = useState(false);
   const [aiExplanation, setAiExplanation] = useState<string>('');
   const [explaining, setExplaining] = useState(false);
-  const [explanationConcept, setExplanationConcept] = useState<string>('');
 
   const sections = lesson.content.sections;
   const hasQuiz = lesson.quizQuestions && lesson.quizQuestions.length > 0;
@@ -39,7 +37,6 @@ export default function LessonViewer({ lesson, onComplete, onExplain, loading }:
       .join(' ');
 
     setExplaining(true);
-    setExplanationConcept(concept);
     setShowAIExplanation(true);
     setAiExplanation('');
 

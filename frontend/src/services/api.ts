@@ -18,7 +18,7 @@ async function fetchAPI<T>(
 
   // Add user ID header if provided
   if (userId) {
-    headers['X-User-Id'] = userId;
+    (headers as Record<string, string>)['X-User-Id'] = userId;
   }
 
   // Create abort controller for timeout
@@ -37,15 +37,17 @@ async function fetchAPI<T>(
     if (!response.ok) {
       let error: ApiError;
       try {
-        error = await response.json();
+        const parsedError = await response.json() as any;
         // Ensure error has expected structure
-        if (!error.error) {
+        if (!parsedError || !parsedError.error) {
           error = {
             error: {
               code: 'HTTP_ERROR',
-              message: error.error?.message || `HTTP ${response.status}: ${response.statusText}`,
+              message: parsedError?.error?.message || `HTTP ${response.status}: ${response.statusText}`,
             },
           };
+        } else {
+          error = parsedError as ApiError;
         }
       } catch {
         // If response is not JSON, create error object
@@ -54,20 +56,20 @@ async function fetchAPI<T>(
             code: 'HTTP_ERROR',
             message: `HTTP ${response.status}: ${response.statusText}`,
           },
-        };
+        } as ApiError;
       }
 
       // Enhance error messages for common status codes if not already set
-      if (response.status === 404 && error.error.code === 'HTTP_ERROR') {
+      if (response.status === 404 && error.error?.code === 'HTTP_ERROR') {
         error.error.code = 'NOT_FOUND';
         error.error.message = error.error.message || 'Resource not found';
-      } else if (response.status === 400 && error.error.code === 'HTTP_ERROR') {
+      } else if (response.status === 400 && error.error?.code === 'HTTP_ERROR') {
         error.error.code = 'VALIDATION_ERROR';
         error.error.message = error.error.message || 'Invalid request';
-      } else if (response.status === 500 && error.error.code === 'HTTP_ERROR') {
+      } else if (response.status === 500 && error.error?.code === 'HTTP_ERROR') {
         error.error.code = 'SERVER_ERROR';
         error.error.message = error.error.message || 'Server error. Please try again.';
-      } else if (response.status === 503 && error.error.code === 'HTTP_ERROR') {
+      } else if (response.status === 503 && error.error?.code === 'HTTP_ERROR') {
         error.error.code = 'SERVICE_UNAVAILABLE';
         error.error.message = 'Service temporarily unavailable. Please try again later.';
       }

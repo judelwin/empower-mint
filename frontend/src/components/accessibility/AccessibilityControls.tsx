@@ -1,5 +1,5 @@
 import { useUser } from '../../context/UserContext.js';
-import { FontSize, ColorblindMode, AccessibilitySettings } from '../../types/user.js';
+import { FontSize, ColorblindMode } from '../../types/user.js';
 import Card from '../ui/Card.js';
 import Button from '../ui/Button.js';
 

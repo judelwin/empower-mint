@@ -55,7 +55,6 @@ export default function Dashboard() {
 
   const currentXP = progress?.xp || 0;
   const currentLevel = progress?.level || 1;
-  const xpForNextLevel = currentLevel * 100;
   const xpInCurrentLevel = currentXP % 100;
   const completedLessons = progress?.completedLessonIds.length || 0;
   const completedScenarios = progress?.completedScenarioIds.length || 0;

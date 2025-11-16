@@ -69,9 +69,9 @@ export function validateArray(
 }
 
 export function handleValidationErrors(
-  req: Request,
+  _req: Request,
   res: Response,
-  next: NextFunction,
+  _next: NextFunction,
   errors: ValidationError[]
 ): boolean {
   if (errors.length > 0) {

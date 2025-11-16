@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Scenario, ScenarioState, DecisionPoint, Choice } from '../../types/scenario.js';
+import { Scenario, ScenarioState } from '../../types/scenario.js';
 import Button from '../ui/Button.js';
 import Card from '../ui/Card.js';
 

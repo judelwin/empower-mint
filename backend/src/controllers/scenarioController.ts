@@ -5,7 +5,7 @@ import * as progressService from '../services/progressService.js';
 
 const scenarios: Scenario[] = scenariosData as Scenario[];
 
-export const getScenarios = (req: Request, res: Response) => {
+export const getScenarios = (req: Request, res: Response): void => {
   try {
     const category = req.query.category as ScenarioCategory | undefined;
     const difficulty = req.query.difficulty 
@@ -49,6 +49,7 @@ export const getScenarioById = (req: Request, res: Response) => {
     }
 
     res.json({ scenario });
+    return;
   } catch (error) {
     console.error('Error fetching scenario:', error);
     res.status(500).json({
@@ -57,6 +58,7 @@ export const getScenarioById = (req: Request, res: Response) => {
         message: 'Failed to fetch scenario',
       },
     });
+    return;
   }
 };
 
@@ -103,7 +105,7 @@ export const makeDecision = async (req: Request, res: Response) => {
     }
 
     // Validate currentState structure
-    const requiredStateFields = ['savings', 'debt', 'monthlyIncome', 'monthlyExpenses', 'stressLevel', 'financialKnowledge'];
+    const requiredStateFields: (keyof ScenarioState)[] = ['savings', 'debt', 'monthlyIncome', 'monthlyExpenses', 'stressLevel', 'financialKnowledge'];
     for (const field of requiredStateFields) {
       if (currentState[field] === undefined || typeof currentState[field] !== 'number') {
         return res.status(400).json({
@@ -196,7 +198,7 @@ export const makeDecision = async (req: Request, res: Response) => {
     try {
       // Update progress in database
       const financialHealthScore = Math.max(0, Math.min(100, 50 + newState.financialKnowledge * 5));
-      const progress = await progressService.addXP(userId, xpEarned);
+      await progressService.addXP(userId, xpEarned);
       const updatedProgress = await progressService.updateProgress(userId, {
         financialHealthScore,
       });
@@ -207,6 +209,7 @@ export const makeDecision = async (req: Request, res: Response) => {
         xpEarned,
         progress: updatedProgress,
       });
+      return;
     } catch (dbError: any) {
       console.error('Database error making decision:', dbError);
       // Still return the decision result even if progress save fails
@@ -217,6 +220,7 @@ export const makeDecision = async (req: Request, res: Response) => {
         progress: null, // Indicate progress update failed
         warning: 'Decision processed but progress was not saved. Please try again.',
       });
+      return;
     }
   } catch (error: any) {
     console.error('Error making decision:', error);
@@ -227,6 +231,7 @@ export const makeDecision = async (req: Request, res: Response) => {
         message: errorMessage,
       },
     });
+    return;
   }
 };
 
@@ -293,7 +298,7 @@ export const completeScenario = async (req: Request, res: Response) => {
 
     try {
       // Update progress in database
-      const progress = await progressService.completeScenario(userId, id, xpEarned);
+      await progressService.completeScenario(userId, id, xpEarned);
       const updatedProgress = await progressService.updateProgress(userId, {
         financialHealthScore,
       });
@@ -302,6 +307,7 @@ export const completeScenario = async (req: Request, res: Response) => {
         xpEarned,
         progress: updatedProgress,
       });
+      return;
     } catch (dbError: any) {
       console.error('Database error completing scenario:', dbError);
       res.status(500).json({
@@ -310,6 +316,7 @@ export const completeScenario = async (req: Request, res: Response) => {
           message: 'Failed to save progress. Please try again.',
         },
       });
+      return;
     }
   } catch (error: any) {
     console.error('Error completing scenario:', error);
@@ -319,6 +326,7 @@ export const completeScenario = async (req: Request, res: Response) => {
         message: error?.message || 'Failed to complete scenario',
       },
     });
+    return;
   }
 };
 

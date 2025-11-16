@@ -45,3 +45,8 @@ backend/data/
 *.tmp
 *.temp
 
+# Agentic/metadata files
+prompt.txt
+rules.md
+tasks.md
+

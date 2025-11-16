@@ -1,5 +1,3 @@
-import { ReactNode } from 'react';
-
 interface XPBadgeProps {
   xp: number;
   level?: number;
