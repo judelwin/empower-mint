@@ -138,7 +138,7 @@ empowermint/
 
 ## Project Status
 
-✅ **Core Features Complete:**
+**Core Features Complete:**
 - User onboarding with personalization
 - Interactive lessons with quizzes
 - Financial scenarios with decision-making
@@ -148,10 +148,10 @@ empowermint/
 - Accessibility controls
 - Database persistence
 
-🎯 **Ready for Demo:**
+**Ready for Demo:**
 The application is fully functional and demo-ready. All core flows work end-to-end.
 
-⚠️ **Known Limitations (Hackathon Scope):**
+**Known Limitations (Hackathon Scope):**
 - No user authentication (uses session IDs)
 - Limited content (5 lessons, 3 scenarios)
 - SQLite database (suitable for single-user or small deployments)

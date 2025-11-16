@@ -21,7 +21,7 @@ const allowedOrigins = [
   ...(frontendUrl ? [frontendUrl] : []),
 ].filter((url): url is string => Boolean(url)); // Remove undefined/null values
 
-console.log('🌐 CORS allowed origins:', allowedOrigins);
+console.log('CORS allowed origins:', allowedOrigins);
 
 app.use(cors({
   origin: (origin, callback) => {
