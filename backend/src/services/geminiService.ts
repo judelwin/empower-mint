@@ -63,6 +63,8 @@ export async function explainConcept(params: ExplainConceptParams): Promise<stri
 
   try {
     const client = getGeminiClient();
+    // Use gemini-1.5-flash (free tier compatible) or fallback to gemini-1.5-pro
+    // Both work with free API keys
     const model = client.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
     const experienceLevel = params.userProfile?.experienceLevel;
@@ -100,11 +102,15 @@ Keep it positive, inclusive, and empowering. Avoid condescending language.`;
     console.error('Gemini API error:', error);
     
     // Handle specific error types
+    if (error.message?.includes('404') || error.message?.includes('not found')) {
+      console.error('Model not found. This might be a model name issue. Check your API key has access to gemini-1.5-flash');
+      throw new Error('AI model not available. Please check your API key configuration.');
+    }
     if (error.message?.includes('timeout')) {
       throw new Error('AI request timed out. Please try again.');
     }
     if (error.message?.includes('API key') || error.message?.includes('authentication')) {
-      throw new Error('AI service authentication failed. Please check configuration.');
+      throw new Error('AI service authentication failed. Please check your API key.');
     }
     if (error.message?.includes('quota') || error.message?.includes('rate limit')) {
       throw new Error('AI service is temporarily unavailable. Please try again later.');
@@ -121,6 +127,8 @@ export async function explainWealthSimulation(params: SimulateWealthParams): Pro
 
   try {
     const client = getGeminiClient();
+    // Use gemini-1.5-flash (free tier compatible) or fallback to gemini-1.5-pro
+    // Both work with free API keys
     const model = client.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
     const experienceLevel = params.userProfile?.experienceLevel;
@@ -164,11 +172,15 @@ Keep it positive, inclusive, and motivating. Avoid making assumptions about the 
     console.error('Gemini API error:', error);
     
     // Handle specific error types
+    if (error.message?.includes('404') || error.message?.includes('not found')) {
+      console.error('Model not found. This might be a model name issue. Check your API key has access to gemini-1.5-flash');
+      throw new Error('AI model not available. Please check your API key configuration.');
+    }
     if (error.message?.includes('timeout')) {
       throw new Error('AI request timed out. Please try again.');
     }
     if (error.message?.includes('API key') || error.message?.includes('authentication')) {
-      throw new Error('AI service authentication failed. Please check configuration.');
+      throw new Error('AI service authentication failed. Please check your API key.');
     }
     if (error.message?.includes('quota') || error.message?.includes('rate limit')) {
       throw new Error('AI service is temporarily unavailable. Please try again later.');
@@ -185,6 +197,8 @@ export async function reflectOnScenarioDecision(params: ReflectScenarioParams): 
 
   try {
     const client = getGeminiClient();
+    // Use gemini-1.5-flash (free tier compatible) or fallback to gemini-1.5-pro
+    // Both work with free API keys
     const model = client.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
     const experienceLevel = params.userProfile?.experienceLevel;
