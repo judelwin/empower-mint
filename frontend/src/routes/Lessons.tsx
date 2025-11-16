@@ -82,7 +82,10 @@ export default function Lessons() {
       )}
 
       {loading && (
-        <div className="text-center py-8 text-gray-600">Loading lessons...</div>
+        <div className="text-center py-12">
+          <div className="spinner mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading lessons...</p>
+        </div>
       )}
 
       {!loading && !error && lessons.length === 0 && (

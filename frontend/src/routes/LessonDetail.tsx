@@ -66,7 +66,10 @@ export default function LessonDetail() {
   if (loading) {
     return (
       <div className="container mx-auto px-4 py-8">
-        <div className="text-center py-8 text-gray-600">Loading lesson...</div>
+        <div className="text-center py-12">
+          <div className="spinner mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading lesson...</p>
+        </div>
       </div>
     );
   }

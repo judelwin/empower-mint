@@ -4,10 +4,13 @@ function Footer() {
       <div className="container mx-auto px-4 py-6">
         <div className="text-center text-sm text-gray-600">
           <p className="mb-2">
-            <strong>EmpowerMint</strong> - Financial Literacy Made Accessible
+            <strong className="text-gray-900">EmpowerMint</strong> - Financial Literacy Made Accessible
           </p>
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-gray-500 mb-2">
             Educational content only. Not financial advice.
+          </p>
+          <p className="text-xs text-gray-400">
+            © 2024 EmpowerMint. Built for inclusive financial education.
           </p>
         </div>
       </div>

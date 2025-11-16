@@ -133,7 +133,10 @@ export default function Dashboard() {
             </Link>
           </div>
           {loading && (
-            <div className="text-center py-8 text-gray-600">Loading recommendations...</div>
+            <div className="text-center py-8">
+              <div className="spinner mx-auto mb-4 w-8 h-8"></div>
+              <p className="text-gray-600 text-sm">Loading recommendations...</p>
+            </div>
           )}
           {error && (
             <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 mb-4">
@@ -176,7 +179,10 @@ export default function Dashboard() {
             </Link>
           </div>
           {loading && (
-            <div className="text-center py-8 text-gray-600">Loading recommendations...</div>
+            <div className="text-center py-8">
+              <div className="spinner mx-auto mb-4 w-8 h-8"></div>
+              <p className="text-gray-600 text-sm">Loading recommendations...</p>
+            </div>
           )}
           {error && (
             <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 mb-4">

@@ -96,7 +96,10 @@ export default function Scenarios() {
       )}
 
       {loading && (
-        <div className="text-center py-8 text-gray-600">Loading scenarios...</div>
+        <div className="text-center py-12">
+          <div className="spinner mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading scenarios...</p>
+        </div>
       )}
 
       {!loading && !error && scenarios.length === 0 && (
