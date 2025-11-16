@@ -2,17 +2,23 @@ import { useState } from 'react';
 import { Lesson } from '../../types/lesson.js';
 import Quiz from './Quiz.js';
 import Button from '../ui/Button.js';
+import Card from '../ui/Card.js';
 
 interface LessonViewerProps {
   lesson: Lesson;
   onComplete: (score: number, answers: Array<{ questionId: string; selectedAnswer: number }>) => void;
+  onExplain?: (concept: string, context?: string) => Promise<string>;
   loading?: boolean;
 }
 
-export default function LessonViewer({ lesson, onComplete, loading }: LessonViewerProps) {
+export default function LessonViewer({ lesson, onComplete, onExplain, loading }: LessonViewerProps) {
   const [currentSection, setCurrentSection] = useState(0);
   const [showQuiz, setShowQuiz] = useState(false);
   const [quizCompleted, setQuizCompleted] = useState(false);
+  const [showAIExplanation, setShowAIExplanation] = useState(false);
+  const [aiExplanation, setAiExplanation] = useState<string>('');
+  const [explaining, setExplaining] = useState(false);
+  const [explanationConcept, setExplanationConcept] = useState<string>('');
 
   const sections = lesson.content.sections;
   const hasQuiz = lesson.quizQuestions && lesson.quizQuestions.length > 0;
@@ -20,6 +26,32 @@ export default function LessonViewer({ lesson, onComplete, loading }: LessonView
   const handleQuizComplete = (score: number, answers: Array<{ questionId: string; selectedAnswer: number }>) => {
     setQuizCompleted(true);
     onComplete(score, answers);
+  };
+
+  const handleExplainConcept = async () => {
+    if (!onExplain) return;
+
+    const concept = lesson.title;
+    const context = lesson.content.sections
+      .filter(s => s.type === 'text')
+      .slice(0, 2)
+      .map(s => s.content)
+      .join(' ');
+
+    setExplaining(true);
+    setExplanationConcept(concept);
+    setShowAIExplanation(true);
+    setAiExplanation('');
+
+    try {
+      const explanation = await onExplain(concept, context);
+      setAiExplanation(explanation);
+    } catch (error) {
+      console.error('Failed to get AI explanation:', error);
+      setAiExplanation('Failed to generate explanation. Please try again.');
+    } finally {
+      setExplaining(false);
+    }
   };
 
   if (showQuiz && hasQuiz) {
@@ -84,6 +116,36 @@ export default function LessonViewer({ lesson, onComplete, loading }: LessonView
           </div>
         ))}
       </div>
+
+      {/* AI Explanation Section */}
+      {onExplain && (
+        <Card className="mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold">Want more clarification?</h3>
+            <Button
+              variant="outline"
+              onClick={handleExplainConcept}
+              disabled={explaining || loading}
+              size="sm"
+            >
+              {explaining ? 'Generating...' : 'Explain with AI'}
+            </Button>
+          </div>
+          {showAIExplanation && (
+            <div className="mt-4">
+              {aiExplanation ? (
+                <div className="prose max-w-none text-gray-700 leading-relaxed">
+                  <p>{aiExplanation}</p>
+                </div>
+              ) : (
+                <div className="text-gray-500 text-sm">
+                  Generating personalized explanation...
+                </div>
+              )}
+            </div>
+          )}
+        </Card>
+      )}
 
       {hasQuiz && (
         <div className="flex gap-4 justify-end">

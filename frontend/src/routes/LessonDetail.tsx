@@ -3,15 +3,18 @@ import { useParams } from 'react-router-dom';
 import { api } from '../services/api.js';
 import { useApi } from '../hooks/useApi.js';
 import { useProgress } from '../context/ProgressContext.js';
+import { useUser } from '../context/UserContext.js';
 import LessonViewer from '../components/lessons/LessonViewer.js';
 import { Lesson } from '../types/lesson.js';
 
 export default function LessonDetail() {
   const { id } = useParams();
   const { addXP, updateProgress } = useProgress();
+  const { userProfile } = useUser();
   const [lesson, setLesson] = useState<Lesson | null>(null);
   const { loading, error, execute } = useApi();
   const [completing, setCompleting] = useState(false);
+  const [explaining, setExplaining] = useState(false);
 
   useEffect(() => {
     if (!id) return;
@@ -37,6 +40,26 @@ export default function LessonDetail() {
       console.error('Failed to complete lesson:', err);
     } finally {
       setCompleting(false);
+    }
+  };
+
+  const handleExplain = async (concept: string, context?: string) => {
+    setExplaining(true);
+    try {
+      const response = await api.explainConcept({
+        concept,
+        context,
+        userProfile: userProfile ? {
+          experienceLevel: userProfile.experienceLevel,
+          learningStyle: userProfile.learningStyle,
+        } : undefined,
+      });
+      return response.explanation;
+    } catch (error) {
+      console.error('Failed to get AI explanation:', error);
+      throw error;
+    } finally {
+      setExplaining(false);
     }
   };
 
@@ -68,7 +91,12 @@ export default function LessonDetail() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <LessonViewer lesson={lesson} onComplete={handleComplete} loading={completing} />
+      <LessonViewer
+        lesson={lesson}
+        onComplete={handleComplete}
+        onExplain={handleExplain}
+        loading={completing || explaining}
+      />
     </div>
   );
 }
