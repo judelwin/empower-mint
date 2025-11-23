@@ -2,6 +2,12 @@
 
 An inclusive, gamified financial literacy and investing education web application powered by AI (Gemini).
 
+## Live Demo
+
+**Try it here:** https://empower-mint.onrender.com/
+
+> **Note:** The backend is hosted on Render. On the first visit or after periods of inactivity, the server may need to "wake up," so the app can take some time to load or respond at first.
+
 ## Overview
 
 EmpowerMint helps beginners learn financial concepts through interactive scenarios, visual simulations, and personalized AI-powered explanations. The app emphasizes accessibility and inclusivity, especially for underrepresented genders and financially underserved users.
